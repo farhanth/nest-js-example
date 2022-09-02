@@ -1,9 +1,20 @@
-import { IsEmail, IsString } from "class-validator";
+import { Transform } from "class-transformer";
+import { IsBoolean, IsEmail, IsString } from "class-validator";
+
 
 export class UpdateUserDto {
     @IsString()
-    name: String;
+    name: string;
 
     @IsEmail()
-    email: String;
+    email: string;
+
+    @IsString()
+    phone_number: string;
+
+    @IsBoolean()
+    @Transform(({ value }) => {
+        return [true, 'enabled', 'true', 1, '1'].indexOf(value) > -1;
+    })
+    is_active: boolean;
 }

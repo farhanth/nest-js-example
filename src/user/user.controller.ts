@@ -18,17 +18,17 @@ export class UserController {
     }
 
     @Patch('/:userId')
-    update(@Body() updateUserDto: UpdateUserDto, @Param('userId', ParseIntPipe) userId: Number) {
+    update(@Body() updateUserDto: UpdateUserDto, @Param('userId', ParseIntPipe) userId: number) {
         return this.userService.update(updateUserDto, userId);
     }
 
     @Get('/:userId')
-    getDetail(@Param('userId', ParseIntPipe) userId: Number) {
+    getDetail(@Param('userId', ParseIntPipe) userId: number) {
         return this.userService.getDetail(userId);
     }
 
     @Delete('/:userId')
-    deleteUser(@Param('userId', ParseIntPipe) userId: Number) {
+    deleteUser(@Param('userId', ParseIntPipe) userId: number) {
         return this.userService.delete(userId);
     }
 }

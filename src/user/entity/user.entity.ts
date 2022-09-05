@@ -12,10 +12,13 @@ export class User {
     email: string;
 
     @Column()
-    password: string;
+    phone_number: string;
 
     @Column()
-    phone_number: string;
+    username: string;
+
+    @Column()
+    password: string;
 
     @Column({ default: true })
     is_active: boolean;

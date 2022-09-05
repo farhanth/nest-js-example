@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/user-create.dto';
 import { UpdateUserDto } from './dto/user-update.dto';
 import { User } from './entity/user.entity';
+import { hashPassword } from '../utils/bcrypt';
 
 @Injectable()
 export class UserService {
@@ -17,19 +18,25 @@ export class UserService {
     }
 
     store(createUserDto: CreateUserDto) {
-        return this.userRepository.save(createUserDto);
+        const password = hashPassword(createUserDto.password);
+        const data = this.userRepository.create({ ...createUserDto, password});
+        
+        return this.userRepository.save(data);
     }
 
     update(updateUserDto: UpdateUserDto, userId: number) {
-        return this.userRepository.update(userId, updateUserDto);
+        const password = hashPassword(updateUserDto.password);
+        const data = this.userRepository.create({ ...updateUserDto, password});
+
+        return this.userRepository.update(userId, data);
     }
 
     getDetail(userId: number) {
         return this.userRepository.findOne({ where: { id: userId } });
     }
 
-    findByEmail(email: string) {
-        return this.userRepository.findOne({ where: { email: email } });
+    findByUsername(username: string) {
+        return this.userRepository.findOne({ where: { username: username } });
     }
 
     delete(userId: number) {

@@ -10,10 +10,13 @@ export class UpdateUserDto {
     email: string;
 
     @IsString()
-    password: string;
+    phone_number: string;
 
     @IsString()
-    phone_number: string;
+    username: string;
+
+    @IsString()
+    password: string;
 
     @IsBoolean()
     @Transform(({ value }) => {

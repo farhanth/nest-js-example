@@ -4,6 +4,7 @@ import { AppController } from './app.controller';
 import { User } from './user/entity/user.entity';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
+import { UserToken } from './auth/entity/userToken.entity';
 
 @Module({
   controllers: [AppController],
@@ -16,7 +17,7 @@ import { AuthModule } from './auth/auth.module';
       username: 'root',
       password: '',
       database: 'nest_js_example',
-      entities: [User],
+      entities: [User, UserToken],
       synchronize: true,
     }),
     AuthModule,

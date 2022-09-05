@@ -17,7 +17,15 @@ export class UserService {
         return this.userRepository.find();
     }
 
-    store(createUserDto: CreateUserDto) {
+    async store(createUserDto: CreateUserDto) {
+        const user = await this.findByUsername(createUserDto.username);
+        
+        if (user) {
+            return {
+                message: 'Username already exists. Please enter another username'
+            }
+        }
+
         const password = hashPassword(createUserDto.password);
         const data = this.userRepository.create({ ...createUserDto, password});
         

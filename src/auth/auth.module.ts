@@ -6,6 +6,8 @@ import { PassportModule } from '@nestjs/passport';
 import { LocalStrategy } from './local.strategy';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './auth.constants';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { UserToken } from './entity/userToken.entity';
 
 @Module({
     controllers: [AuthController],
@@ -14,8 +16,9 @@ import { jwtConstants } from './auth.constants';
         PassportModule,
         JwtModule.register({
             secret: jwtConstants.secret,
-            signOptions: { expiresIn: '3000s' },
+            signOptions: { expiresIn: jwtConstants.expired_time },
         }),
+        TypeOrmModule.forFeature([UserToken])
     ],
     providers: [AuthService, LocalStrategy],
 })

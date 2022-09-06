@@ -5,6 +5,7 @@ import { User } from './user/entity/user.entity';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { UserToken } from './auth/entity/userToken.entity';
+import { ProfileModule } from './profile/profile.module';
 
 @Module({
   controllers: [AppController],
@@ -21,6 +22,7 @@ import { UserToken } from './auth/entity/userToken.entity';
       synchronize: true,
     }),
     AuthModule,
+    ProfileModule,
   ]
 })
 export class AppModule {}

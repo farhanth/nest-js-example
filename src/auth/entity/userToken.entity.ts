@@ -9,10 +9,10 @@ export class UserToken {
     @Index('FK_user')
     user_id: number;
 
-    @Column()
+    @Column({ nullable: true })
     token: string;
 
-    @Column()
+    @Column({ nullable: true })
     expired_at: Date;
 
     @CreateDateColumn()

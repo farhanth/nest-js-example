@@ -35,7 +35,8 @@ export class AuthService {
     }
 
     async login(user: any) {
-        const exist_token = await this.userTokenRepository.findOne({ where: 
+        const exist_token = await this.userTokenRepository.findOne({
+            where:
             {
                 user_id: user.id,
                 expired_at: MoreThanOrEqual(new Date())
@@ -44,7 +45,11 @@ export class AuthService {
 
         if (exist_token) {
             return {
-                access_token: exist_token.token,
+                statusCode: 200,
+                message: 'success',
+                data: {
+                    access_token: exist_token.token
+                },
             };
         }
 
@@ -63,7 +68,36 @@ export class AuthService {
         this.userTokenRepository.save(userTokenEntity);
 
         return {
-            access_token: token,
+            statusCode: 200,
+            message: 'success',
+            data: {
+                access_token: token
+            },
+        };
+    }
+
+    async logout(user_id: number, bearer: string) {
+        const exist_token = await this.userTokenRepository.findOne({
+            where:
+            {
+                user_id: user_id,
+                token: bearer,
+                expired_at: MoreThanOrEqual(new Date())
+            }
+        });
+
+        if (exist_token) {
+            const userTokenEntity: UserToken = this.userTokenRepository.create();
+            userTokenEntity.token = null;
+            userTokenEntity.expired_at = null;
+
+            this.userTokenRepository.update(exist_token.id, userTokenEntity);
+        }
+
+        return {
+            statusCode: 200,
+            message: 'success',
+            data: {},
         };
     }
 }
